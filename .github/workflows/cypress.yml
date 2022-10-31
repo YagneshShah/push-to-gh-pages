@@ -27,4 +27,11 @@ jobs:
         with:
           name: cypress-reports
           path: ./cypress
+          
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./cypress  # default: public
+          keep_files: true
 
