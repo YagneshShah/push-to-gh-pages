@@ -28,6 +28,11 @@ jobs:
           name: cypress-reports
           path: ./cypress
           
+      - name: create index.html
+        run: |
+          sudo apt install tree
+          tree -H '.' -L 3 -r --noreport --charset utf-8 -P "*.html" -o index.html | sed -e '/<hr>/,+7d' > ./index.html
+          
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.0
         with:
@@ -35,7 +40,9 @@ jobs:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY_FOR_GHPAGESDEMO }}
           external_repository: YagneshShah/gh-pages-demo
           publish_branch: main
-          publish_dir: ./cypress
+          publish_dir: |
+            ./cypress
+            ./index.html
           destination_dir: ./cypress
           keep_files: true
 
