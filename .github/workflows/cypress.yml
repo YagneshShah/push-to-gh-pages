@@ -21,6 +21,7 @@ jobs:
           echo '111111 v2' > ./pqd/cypress/cypress_1.html
           echo '2222 v2' > ./pqd/cypress/cypress_2.html
           echo '3333 v2' > ./pqd/cypress/cypress_3.html
+          echo '4444 v2' > ./pqd/cypress/cypress_3.html
 
       - name: create index.html
         run: |
