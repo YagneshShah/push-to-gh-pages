@@ -16,7 +16,7 @@ jobs:
 
       - name: run or create output files for artifacts
         run: |
-          mkdir ./cypress
+          mkdir ./pqd/cypress
           echo '111111' > ./pqd/cypress/cypress_1.html
           echo '2222' > ./pqd/cypress/cypress_2.html
           echo '3333' > ./pqd/cypress/cypress_3.html
