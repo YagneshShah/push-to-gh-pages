@@ -31,9 +31,9 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          #deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          #external_repository: YagneshShah/gh-pages-demo
+          #github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY_FOR_GHPAGESDEMO }}
+          external_repository: YagneshShah/gh-pages-demo
           publish_branch: main
           publish_dir: ./cypress
           destination_dir: ./cypress
