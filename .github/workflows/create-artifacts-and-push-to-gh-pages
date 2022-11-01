@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: push test artifacts to GH-Pages repo main branch
 on:
   workflow_dispatch:
     #This trigger helps show the "Run Workflow" button under the github actions page. Hence enabling to trigger workflow manually.
@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  cypress-run:
+  create-artifacts-and-push-to-gh-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,13 +36,20 @@ jobs:
           name: pqd
           path: ./pqd
           
+        #https://github.com/peaceiris/actions-gh-pages
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.0
         with:
+          #or use github_token if want to push in same repo branch 'gh-pages' or any other branch:
           #github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # generate deploy key: ssh-keygen -t rsa -b 4096 -C "your-email@domain.com" -f gh-pages-ys -N ""
+          # paste ssh public key under repo1 'gh-pages-demo' > settings > deploy)
+          # and 'deploy_key': paste ssh private key under repo2 from which you push the file to repo1. ex: repo2 = 'push-to-gh-pages' > settings > secrets > add new secret 'ACTIONS_DEPLOY_KEY_FOR_GHPAGESDEMO'
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY_FOR_GHPAGESDEMO }}
           external_repository: YagneshShah/gh-pages-demo
           publish_branch: main
+          
           publish_dir: ./pqd
           destination_dir: ./cypress
           keep_files: true
