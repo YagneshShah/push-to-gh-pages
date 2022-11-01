@@ -21,17 +21,20 @@ jobs:
           echo '2222' > ./cypress/cypress_2.html
           echo '3333' > ./cypress/cypress_3.html
 
+      - name: create index.html
+        run: |
+          sudo apt install tree
+          tree -H '.' -L 3 -r --noreport --charset utf-8 -P "*.html" -o ./index.html | sed -e '/<hr>/,+7d' > ./index.html
+          ls -l
+
       - name: upload E2E test reports from individual parallel exec chunk ${{matrix.chunk}}
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-reports
-          path: ./cypress
-          
-      - name: create index.html
-        run: |
-          sudo apt install tree
-          tree -H '.' -L 3 -r --noreport --charset utf-8 -P "*.html" -o index.html | sed -e '/<hr>/,+7d' > ./index.html
+          path: |
+            ./cypress
+            ./index.html
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.0
