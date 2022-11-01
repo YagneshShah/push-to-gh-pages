@@ -17,24 +17,22 @@ jobs:
       - name: run or create output files for artifacts
         run: |
           mkdir ./cypress
-          echo '111111' > ./cypress/cypress_1.html
-          echo '2222' > ./cypress/cypress_2.html
-          echo '3333' > ./cypress/cypress_3.html
+          echo '111111' > ./pqd/cypress/cypress_1.html
+          echo '2222' > ./pqd/cypress/cypress_2.html
+          echo '3333' > ./pqd/cypress/cypress_3.html
 
       - name: create index.html
         run: |
           sudo apt install tree
-          tree -H '.' -L 3 -r --noreport --charset utf-8 -P "*.html" -o ./index.html | sed -e '/<hr>/,+7d' > ./index.html
+          tree -H '.' -L 3 -r --noreport --charset utf-8 -P "*.html" -o ./pqd/index.html | sed -e '/<hr>/,+7d' > ./pqd/index.html
           ls -l
 
       - name: upload E2E test reports from individual parallel exec chunk ${{matrix.chunk}}
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: cypress-reports
-          path: |
-            ./cypress
-            ./index.html
+          name: pqd
+          path: ./pqd
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.0
@@ -43,9 +41,7 @@ jobs:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY_FOR_GHPAGESDEMO }}
           external_repository: YagneshShah/gh-pages-demo
           publish_branch: main
-          publish_dir: |
-            ./cypress
-            ./index.html
+          publish_dir: ./pqd
           destination_dir: ./cypress
           keep_files: true
 
